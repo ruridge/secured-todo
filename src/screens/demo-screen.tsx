@@ -51,7 +51,7 @@ function Section({ title, children }: SectionProps) {
   );
 }
 
-export default function DemoScreen() {
+export function DemoScreen() {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
