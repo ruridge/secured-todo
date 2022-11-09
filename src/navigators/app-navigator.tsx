@@ -8,8 +8,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DemoScreen } from '../screens/demo-screen';
 import { LoginScreen } from '../screens/login-screen';
-
-import { authenticateAsync } from 'expo-local-authentication';
+import { useAuth } from '../context/auth-context';
 
 export type AppStackParamList = {
   Demo: undefined;
@@ -18,31 +17,26 @@ export type AppStackParamList = {
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
 function AppStack() {
-  // TODO: use context to store auth state so it can be updated from the login screen
-  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | null>(
-    null,
-  );
+  const { isAuth } = useAuth();
 
-  React.useEffect(() => {
-    authenticateAsync().then((result) => {
-      setIsAuthenticated(result.success);
-    });
-  }, []);
-
-  if (isAuthenticated === null) {
+  // On App Start:
+  // - isAuth is null and we know we need to authenticate
+  // - so authentication is handled in the AuthProvider
+  // - we render nothing until we know if the authentication was successful
+  if (isAuth === null) {
     return null;
   }
 
   return (
     <Stack.Navigator>
-      {isAuthenticated ? (
-        <>
-          <Stack.Screen name="Demo" component={DemoScreen} />
-        </>
+      {isAuth ? (
+        <Stack.Screen name="Demo" component={DemoScreen} />
       ) : (
-        <>
-          <Stack.Screen name="Login" component={LoginScreen} />
-        </>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false, animation: 'none' }}
+        />
       )}
     </Stack.Navigator>
   );

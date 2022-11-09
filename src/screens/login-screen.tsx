@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { SafeAreaView, Text, useColorScheme } from 'react-native';
+import { SafeAreaView, Text, useColorScheme, View } from 'react-native';
 import type { TextStyle, ViewStyle } from 'react-native';
-import { Button } from '../components/button';
-
 import { authenticateAsync } from 'expo-local-authentication';
+import { Button } from '../components/button';
+import { useAuth } from '../context/auth-context';
 
 const Colors = {
   white: '#ffffff',
@@ -12,38 +12,45 @@ const Colors = {
 
 export function LoginScreen() {
   const isDarkMode = useColorScheme() === 'dark';
+  const { setIsAuth } = useAuth();
 
   function onPressAuthenticate() {
     authenticateAsync().then((result) => {
-      // setAuth(result.success);
+      setIsAuth(result.success);
       console.log(`set auth state to ${result.success}`);
     });
   }
 
   return (
-    <SafeAreaView style={wrapperStyle}>
-      <Text
-        style={[
-          warningTextStyle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}
-      >
-        Set authentication to proceed
-      </Text>
-      <Button onPress={onPressAuthenticate} text="Login" />
+    <SafeAreaView style={$wrapper}>
+      <View style={$screenLayout}>
+        <Text
+          style={[
+            $warningText,
+            {
+              color: isDarkMode ? Colors.white : Colors.black,
+            },
+          ]}
+        >
+          Login using your device passcode or biometrics
+        </Text>
+        <Button onPress={onPressAuthenticate} text="Login" />
+      </View>
     </SafeAreaView>
   );
 }
 
-const wrapperStyle: ViewStyle = {
+const $wrapper: ViewStyle = {
   flex: 1,
-  justifyContent: 'flex-end',
 };
 
-const warningTextStyle: TextStyle = {
-  fontSize: 18,
+const $screenLayout: ViewStyle = {
+  marginTop: 80,
+  marginHorizontal: 24,
+};
+
+const $warningText: TextStyle = {
+  fontSize: 22,
   textAlign: 'center',
   marginBottom: 20,
 };
