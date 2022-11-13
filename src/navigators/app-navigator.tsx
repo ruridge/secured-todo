@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useColorScheme } from 'react-native';
 import {
   NavigationContainer,
@@ -9,8 +9,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DemoScreen } from '../screens/demo-screen';
 import { LoginScreen } from '../screens/login-screen';
 import { useAuth } from '../context/auth-context';
+import { TodoScreen } from '../screens/todo-screen';
 
 export type AppStackParamList = {
+  Todo: undefined;
   Demo: undefined;
   Login: undefined;
 };
@@ -30,7 +32,14 @@ function AppStack() {
   return (
     <Stack.Navigator>
       {isAuth ? (
-        <Stack.Screen name="Demo" component={DemoScreen} />
+        <>
+          <Stack.Screen
+            name="Todo"
+            component={TodoScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Demo" component={DemoScreen} />
+        </>
       ) : (
         <Stack.Screen
           name="Login"

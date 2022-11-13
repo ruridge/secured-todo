@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { AppNavigator } from './src/navigators/app-navigator';
 import { AuthProvider } from './src/context/auth-context';
