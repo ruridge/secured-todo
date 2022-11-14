@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   SafeAreaView,
   View,
 } from 'react-native';
-import type { ListRenderItemInfo, ViewStyle } from 'react-native';
+import type { ListRenderItemInfo, TextInput, ViewStyle } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { Text } from '../components/atoms';
 import { ButtonInput } from '../components/button-input';
@@ -22,15 +23,17 @@ interface TodoItemProps {
   id: number;
   text: string;
   completed: boolean;
-  handleCheckboxPress: (id: number, completed: boolean) => void;
-  handleRemovePress: (id: number) => void;
+  onCheckboxPress: (id: number, completed: boolean) => void;
+  onRemovePress: (id: number) => void;
+  onPress: (id: number) => void;
 }
 function TodoItem({
   id,
   text,
   completed,
-  handleCheckboxPress,
-  handleRemovePress,
+  onCheckboxPress,
+  onRemovePress,
+  onPress,
 }: TodoItemProps) {
   return (
     <View style={todoItemStyles}>
@@ -40,13 +43,15 @@ function TodoItem({
           marginTop: SPACING[0.5],
         }}
         value={completed}
-        onValueChange={(isChecked) => handleCheckboxPress(id, isChecked)}
+        onValueChange={(isChecked) => onCheckboxPress(id, isChecked)}
       />
-      <Text style={{ flex: 1, color: COLORS.gray[600] }}>{text}</Text>
+      <Pressable style={{ flex: 1 }} onPress={() => onPress(id)}>
+        <Text style={{ color: COLORS.gray[600] }}>{text}</Text>
+      </Pressable>
       <Text
         size="sm"
         style={{ color: COLORS.gray[600] }}
-        onPress={() => handleRemovePress(id)}
+        onPress={() => onRemovePress(id)}
       >
         REMOVE
       </Text>
@@ -64,19 +69,56 @@ const todoItemStyles: ViewStyle = {
 
 export function TodoScreen() {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [text, setText] = useState('');
+  const [textInputValue, setTextInputValue] = useState('');
+  const [selectedTodoID, setSelectedTodoID] = useState<number | null>(null);
+
+  const textInputRef = useRef<TextInput>(null);
 
   function createNewTodo() {
-    if (text === '') {
+    // prevent empty todos from being created on keyboard return press
+    if (textInputValue === '') {
       return;
     }
     const newTodo: Todo = {
       id: Math.random(),
-      text,
+      text: textInputValue,
       completed: false,
     };
     setTodos([...todos, newTodo]);
-    setText('');
+    setTextInputValue('');
+  }
+
+  function editTodo() {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => {
+        if (todo.id === selectedTodoID) {
+          return {
+            ...todo,
+            text: textInputValue,
+          };
+        }
+        return todo;
+      }),
+    );
+    setTextInputValue('');
+    setSelectedTodoID(null);
+  }
+
+  function handleSubmit() {
+    if (selectedTodoID) {
+      editTodo();
+    } else {
+      createNewTodo();
+    }
+  }
+
+  function handleTodoPress(id: number) {
+    const selectedTodo = todos.find((todo) => todo.id === id);
+    if (selectedTodo) {
+      setSelectedTodoID(id);
+      setTextInputValue(selectedTodo.text);
+      textInputRef.current?.focus();
+    }
   }
 
   function handleCheckboxPress(id: number, completed: boolean) {
@@ -95,12 +137,13 @@ export function TodoScreen() {
       id={item.id}
       text={item.text}
       completed={item.completed}
-      handleCheckboxPress={handleCheckboxPress}
-      handleRemovePress={() => {
+      onCheckboxPress={handleCheckboxPress}
+      onRemovePress={() => {
         setTodos((prevTodos) =>
           prevTodos.filter((todo) => todo.id !== item.id),
         );
       }}
+      onPress={handleTodoPress}
     />
   );
 
@@ -129,10 +172,12 @@ export function TodoScreen() {
           style={{ paddingHorizontal: SPACING[4] }}
         />
         <ButtonInput
-          onSubmit={createNewTodo}
-          onChangeText={setText}
-          value={text}
-          disabled={text === ''}
+          onSubmit={handleSubmit}
+          onChangeText={setTextInputValue}
+          value={textInputValue}
+          disabled={textInputValue === ''}
+          textInputRef={textInputRef}
+          buttonText={selectedTodoID ? 'EDIT' : 'ADD'}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>

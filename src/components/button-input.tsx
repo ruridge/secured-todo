@@ -1,4 +1,5 @@
 import React from 'react';
+import type { RefObject } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import type { TextStyle, ViewStyle } from 'react-native';
 import { Button } from './atoms';
@@ -10,12 +11,16 @@ type ButtonInputProps = {
   onChangeText: (text: string) => void;
   value: string;
   disabled?: boolean;
+  textInputRef?: RefObject<TextInput>;
+  buttonText: string;
 };
 export function ButtonInput({
   onSubmit,
   onChangeText,
   value,
   disabled,
+  textInputRef,
+  buttonText,
 }: ButtonInputProps) {
   return (
     <View style={buttonInputStyles}>
@@ -26,8 +31,9 @@ export function ButtonInput({
         value={value}
         returnKeyType="done"
         onSubmitEditing={onSubmit}
+        ref={textInputRef}
       />
-      <Button text="Add" onPress={onSubmit} disabled={disabled} />
+      <Button text={buttonText} onPress={onSubmit} disabled={disabled} />
     </View>
   );
 }
