@@ -6,13 +6,13 @@ import { COLORS, RADIUS, SPACING } from '../theme';
 import { sizeStyles } from './atoms/text';
 
 type ButtonInputProps = {
-  onButtonPress: () => void;
+  onSubmit: () => void;
   onChangeText: (text: string) => void;
   value: string;
   disabled?: boolean;
 };
 export function ButtonInput({
-  onButtonPress,
+  onSubmit,
   onChangeText,
   value,
   disabled,
@@ -24,8 +24,10 @@ export function ButtonInput({
         placeholder="Enter here"
         onChangeText={onChangeText}
         value={value}
+        returnKeyType="done"
+        onSubmitEditing={onSubmit}
       />
-      <Button text="Add" onPress={onButtonPress} disabled={disabled} />
+      <Button text="Add" onPress={onSubmit} disabled={disabled} />
     </View>
   );
 }

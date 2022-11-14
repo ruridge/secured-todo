@@ -66,7 +66,10 @@ export function TodoScreen() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [text, setText] = useState('');
 
-  function handleAddButtonPress() {
+  function createNewTodo() {
+    if (text === '') {
+      return;
+    }
     const newTodo: Todo = {
       id: Math.random(),
       text,
@@ -126,7 +129,7 @@ export function TodoScreen() {
           style={{ paddingHorizontal: SPACING[4] }}
         />
         <ButtonInput
-          onButtonPress={handleAddButtonPress}
+          onSubmit={createNewTodo}
           onChangeText={setText}
           value={text}
           disabled={text === ''}
