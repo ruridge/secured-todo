@@ -68,6 +68,8 @@ src/
 
 **How do I get my dev environment set up so I can start hacking on this app?**
 
+Using React Native CLI: https://reactnative.dev/docs/0.69/getting-started
+
 ### Requirements:
 
 - [NodeJS LTS](https://nodejs.org/en/)
