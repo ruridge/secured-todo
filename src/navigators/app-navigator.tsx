@@ -6,14 +6,14 @@ import {
   DefaultTheme,
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { DemoScreen } from '../screens/demo-screen';
 import { LoginScreen } from '../screens/login-screen';
 import { useAuth } from '../context/auth-context';
 import { TodoScreen } from '../screens/todo-screen';
 
+// react-navigation screens
+// replace undefined to type default props passed into screens (if used)
 export type AppStackParamList = {
   Todo: undefined;
-  Demo: undefined;
   Login: undefined;
 };
 const Stack = createNativeStackNavigator<AppStackParamList>();
@@ -38,7 +38,6 @@ function AppStack() {
             component={TodoScreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Demo" component={DemoScreen} />
         </>
       ) : (
         <Stack.Screen
