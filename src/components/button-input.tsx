@@ -30,7 +30,7 @@ export function ButtonInput({
 }
 
 const buttonInputStyles: ViewStyle = {
-  backgroundColor: '#ffffff',
+  backgroundColor: COLORS.white,
   borderRadius: RADIUS['2xl'],
   flexDirection: 'row',
   padding: SPACING[4],
