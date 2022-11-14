@@ -14,8 +14,14 @@ type ButtonProps = {
   text: string;
   onPress: () => void;
   size?: keyof typeof buttonSizes;
+  disabled?: boolean;
 };
-export function Button({ text, onPress, size = 'medium' }: ButtonProps) {
+export function Button({
+  text,
+  onPress,
+  size = 'medium',
+  disabled,
+}: ButtonProps) {
   const colorScheme = useColorScheme() ?? 'light';
   return (
     <Pressable
@@ -25,7 +31,9 @@ export function Button({ text, onPress, size = 'medium' }: ButtonProps) {
         colorScheme === 'light' && lightButtonStyle,
         colorScheme === 'dark' && darkButtonStyle,
         state.pressed && { opacity: 0.8 },
+        disabled && { opacity: 0.5 },
       ]}
+      disabled={disabled}
     >
       <Text
         size={buttonSizes[size]}

@@ -129,6 +129,7 @@ export function TodoScreen() {
           onButtonPress={handleAddButtonPress}
           onChangeText={setText}
           value={text}
+          disabled={text === ''}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>

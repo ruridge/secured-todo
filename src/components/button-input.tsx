@@ -9,11 +9,13 @@ type ButtonInputProps = {
   onButtonPress: () => void;
   onChangeText: (text: string) => void;
   value: string;
+  disabled?: boolean;
 };
 export function ButtonInput({
   onButtonPress,
   onChangeText,
   value,
+  disabled,
 }: ButtonInputProps) {
   return (
     <View style={buttonInputStyles}>
@@ -23,7 +25,7 @@ export function ButtonInput({
         onChangeText={onChangeText}
         value={value}
       />
-      <Button text="Add" onPress={onButtonPress} />
+      <Button text="Add" onPress={onButtonPress} disabled={disabled} />
     </View>
   );
 }
