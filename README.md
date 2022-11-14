@@ -2,7 +2,7 @@
 
 A secured TODO list application with a bare React Native project and Expo local-authentication module.
 
-I have intentionaly chosen to use useState and useContext to manage application state to demonstrate my knowledge of React core React concepts. For a large complex application I would consider using [MobX-state-tree](https://mobx-state-tree.js.org/) or [Redux-toolkit](https://redux-toolkit.js.org/).
+I have intentionally chosen to use useState and useContext to manage application state to demonstrate my knowledge of React core React concepts. For a large complex application I would consider using [MobX-state-tree](https://mobx-state-tree.js.org/) or [Redux-toolkit](https://redux-toolkit.js.org/).
 
 - react-native with Expo
 - expo-authentication
