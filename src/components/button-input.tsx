@@ -1,5 +1,4 @@
 import React from 'react';
-import type { RefObject } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import type { TextStyle, ViewStyle } from 'react-native';
 import { Button } from './atoms';
@@ -9,12 +8,12 @@ import { sizeStyles } from './atoms/text';
 type ButtonInputProps = {
   onButtonPress: () => void;
   onChangeText: (text: string) => void;
-  inputRef: RefObject<TextInput>;
+  value: string;
 };
 export function ButtonInput({
   onButtonPress,
   onChangeText,
-  inputRef,
+  value,
 }: ButtonInputProps) {
   return (
     <View style={buttonInputStyles}>
@@ -22,7 +21,7 @@ export function ButtonInput({
         style={[textInputStyles, sizeStyles.base]}
         placeholder="Enter here"
         onChangeText={onChangeText}
-        ref={inputRef}
+        value={value}
       />
       <Button text="Add" onPress={onButtonPress} />
     </View>

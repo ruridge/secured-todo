@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
-import type { ListRenderItemInfo, ViewStyle, TextInput } from 'react-native';
+import type { ListRenderItemInfo, ViewStyle } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { Text } from '../components/atoms';
 import { ButtonInput } from '../components/button-input';
@@ -66,8 +66,6 @@ export function TodoScreen() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [text, setText] = useState('');
 
-  const textInputRef = useRef<TextInput>(null);
-
   function handleAddButtonPress() {
     const newTodo: Todo = {
       id: Math.random(),
@@ -75,7 +73,7 @@ export function TodoScreen() {
       completed: false,
     };
     setTodos([...todos, newTodo]);
-    textInputRef.current?.clear();
+    setText('');
   }
 
   function handleCheckboxPress(id: number, completed: boolean) {
@@ -130,7 +128,7 @@ export function TodoScreen() {
         <ButtonInput
           onButtonPress={handleAddButtonPress}
           onChangeText={setText}
-          inputRef={textInputRef}
+          value={text}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>
