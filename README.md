@@ -13,7 +13,11 @@ A secured TODO list application with a bare React Native project and Expo local-
 - Re-authenticate user after the app is suspended (put in the background)
 - Create/Update/Delete ToDos
 
-https://user-images.githubusercontent.com/856071/195883077-5e7ebfa1-74d1-414e-b44c-dcc250cebf36.mov
+
+
+https://user-images.githubusercontent.com/856071/201657376-3f8104da-2d03-4a98-aae7-f78be843a5dd.mp4
+
+
 
 ## Installation
 
