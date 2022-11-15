@@ -9,6 +9,12 @@ I have intentionally chosen to use useState and useContext to manage application
 - expo-checkbox
 - react-navigation
 
+## Technical Decisions
+
+**User Authentication State:** Is managed using the react context API: The API should be familiar to react developers, auth state can be accessed using a hook in any component at any depth, authenticated state does not change frequently so context performance limitations won't be an issue.
+
+**Authentication Hook** I created a custom hook to manage the authentication flow in `src/context/auth-context.tsx` it provides a simple API for working with the auth states `useAuth: () => { isAuth, setIsAuth }` and keeps all of the authentication implementation logic in one place.
+
 ## Current App
 
 - Authenticate user with device passcode / biometrics on app launch
