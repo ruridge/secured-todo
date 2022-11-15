@@ -62,6 +62,14 @@ src/
 └── theme.ts (design system constants)
 ```
 
+### **src/components/atoms**
+
+following the [Atomic web design methodology](https://bradfrost.com/blog/post/atomic-web-design/#atoms) for atoms (the smallest unit elements of a design)
+
+### **src/components**
+
+these are more complex components, a combination of atoms and custom code combined together to form a compleat unit of UI (akin to atomic web design molecules)
+
 ## Development
 
 **How do I get my dev environment set up so I can start hacking on this app?**
